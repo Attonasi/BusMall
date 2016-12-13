@@ -4,8 +4,9 @@
 
 var threePicturesID = document.getElementById('threePictures');
 var surveyForm = document.getElementById('survey-form');
-var userChoices = 1;
+var userChoices = 0;
 var cantBe = [];
+var resultsViewed = false;
 var imagePaths = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.gif', 'img/water-can.jpg', 'img/wine-glass.jpg'];
 var imageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'chthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 var leftPic = document.getElementById('leftPicture');
@@ -31,46 +32,8 @@ function NewPicture(imagePath, imageName){
   picArray.push(this);
 }
 
-
 displayThreePictures(leftPic, centerPic, rightPic);
 
-// Event Listeners
-threePicturesID.addEventListener('click', superEventHandler);
-surveyForm.addEventListener('submit', buttonHandler);
-
-// Event Handler >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-function superEventHandler(event){
-
-  event.preventDefault();
-  // console.log('do something');
-  if (event.currentTarget === event.target){
-    return alert('Click on the picture please');
-  }
-  if(userChoices >=5)
-    return alert('Thank you for completing the survey! Please click on the view results button to review the results.')
-
-  var clickedPic = event.target.id.value;
-
-  console.log('event target is ' +clickedPic);
-
-  displayThreePictures(leftPic, centerPic, rightPic);
-  userChoices+=1;
-  console.log(userChoices);
-
-}
-
-function buttonHandler(event){
-
-  event.preventDefault();
-  if(userChoices<5){
-    return alert('Please complete the survey!')
-  }
-  // for(var v=0; v<picArray.length; v++){
-  //   document.write(picArray[v]);
-  // }
-  console.table(picArray);
-}
 
 // Functioning Functions
 
@@ -87,10 +50,12 @@ function displayThreePictures(leftPic, centerPic, rightPic){
   while(leftPicSame){
     leftPicIndex=bigRandom();
     leftPic.src = picArray[leftPicIndex].filePath;
+    leftPic.alt = leftPicIndex;
     for(var i=0; i<cantBe.length; i++){
       if(cantBe[i]===leftPic.src){
         leftPicIndex=bigRandom();
         leftPic.src = picArray[leftPicIndex].filePath;
+        leftPic.alt = leftPicIndex;
       }
     }
     cantBe.push(leftPic.src);
@@ -101,10 +66,12 @@ function displayThreePictures(leftPic, centerPic, rightPic){
   while(centerPicSame){
     centerPicIndex=bigRandom();
     centerPic.src = picArray[centerPicIndex].filePath;
+    centerPic.alt = centerPicIndex;
     for(var j=0; j<cantBe.length; j++){
       if(cantBe[j]===centerPic.src){
         centerPicIndex=bigRandom();
         centerPic.src = picArray[centerPicIndex].filePath;
+        centerPic.alt = centerPicIndex;
       }
     }
     cantBe.push(centerPic.src);
@@ -115,16 +82,19 @@ function displayThreePictures(leftPic, centerPic, rightPic){
   while(rightPicSame){
     rightPicIndex=bigRandom();
     rightPic.src = picArray[rightPicIndex].filePath;
+    rightPic.alt = rightPicIndex;
     for(var k=0; k<cantBe.length; k++){
       if(cantBe[k]===rightPic.src){
         rightPicIndex=bigRandom();
         rightPic.src = picArray[rightPicIndex].filePath;
+        rightPic.alt = rightPicIndex;
       }
     }
     cantBe.push(rightPic.src);
     picArray[rightPicIndex].howOftenAppear+=1;
     rightPicSame = false;
   }
+  // console.log('The alts are '+leftPic.alt, centerPic.alt, rightPic.alt);
 
   if(cantBe.length>3){
     cantBe.shift();
@@ -136,3 +106,47 @@ function displayThreePictures(leftPic, centerPic, rightPic){
 function bigRandom() {
   return Math.floor(Math.random()*20);
 }
+
+// Event Handlers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+function superEventHandler(event){
+
+  event.preventDefault();
+  if (event.currentTarget === event.target){
+    return alert('Click on the picture please');
+  }
+
+  var clickedPic = parseInt(event.target.alt);
+
+  for(var q=0; q<picArray.length; q++){
+    if(q === clickedPic){
+      picArray[q].howOftenClicked+=1;
+    }
+  }
+
+  // console.log('event target is '+ event.target.alt, leftPic.alt, centerPic.alt, rightPic.alt);
+  userChoices+=1;
+
+  if(userChoices >=25){
+    return alert('Thank you for completing the survey! Please click on the view results button to review the results.');
+  }
+
+  displayThreePictures(leftPic, centerPic, rightPic);
+  // console.log(userChoices);
+}
+
+function buttonHandler(event){
+  event.preventDefault();
+  if (resultsViewed){
+    return alert('gosh you are annoying');
+  }
+  if(userChoices<25){
+    resultsViewed = true;
+    return alert('Please complete the survey!')
+  }
+  console.table(picArray);
+}
+
+// Event Listeners
+threePicturesID.addEventListener('click', superEventHandler);
+surveyForm.addEventListener('submit', buttonHandler);
