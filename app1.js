@@ -13,9 +13,29 @@ var imageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum'
 var leftPic = document.getElementById('leftPicture');
 var centerPic = document.getElementById('centerPicture');
 var rightPic = document.getElementById('rightPicture');
-
+var barChart = document.getElementById('barChart');
 var picArray = [];
 
+var barChartData = {
+
+  labels : imageNames['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'chthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass']
+
+  datasets : [
+    {
+      fillColor : "red",
+      strokeColor : "green",
+      data : picArray.howOftenAppear;
+    },
+    {
+      fillColor : "blue",
+      strokeColor : "green)",
+      data : howOftenClicked;
+    }
+  ]
+}
+
+
+new Chart(barChart).Bar(barChartData)
 // fill picArray
 for(var i=0; i<imagePaths.length; i++){
   var imageName = imageNames[i];
@@ -73,6 +93,7 @@ function setCantBe(){
   cantBe[1] = currentArray[1];
   cantBe[2] = currentArray[2];
 }
+
 function bigRandom() {
   return Math.floor(Math.random()*20);
 }
@@ -94,7 +115,6 @@ function superEventHandler(event){
     }
   }
 
-  // console.log('event target is '+ event.target.alt, leftPic.alt, centerPic.alt, rightPic.alt);
   userChoices+=1;
 
   if(userChoices >=25){
@@ -102,7 +122,6 @@ function superEventHandler(event){
   }
 
   displayThreePictures(leftPic, centerPic, rightPic);
-  // console.log(userChoices);
 }
 
 function buttonHandler(event){
