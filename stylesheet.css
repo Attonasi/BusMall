@@ -7,4 +7,6 @@ section {
 }
 img {
   width: 250px;
+  border: solid 5px red; 
+
 }
