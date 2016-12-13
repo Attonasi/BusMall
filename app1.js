@@ -5,9 +5,10 @@
 // Globals
 var threePicturesID = document.getElementById('threePictures');
 var userChoices = 0;
-var lastLeftPic = null;
-var lastRightPic = null;
-var lastCenterPic = null;
+// var lastLeftPic = null;
+// var lastRightPic = null;
+// var lastCenterPic = null;
+var cantBe = [];
 
 var imagePaths = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.gif', 'img/water-can.jpg', 'img/wine-glass.jpg'];
 
@@ -34,12 +35,10 @@ function NewPicture(imagePath, imageName){
 
 // Event Handler
 
-
-
 function superEventHandler(event){
 
   event.preventDefault();
-
+  console.log('do something');
 
   var leftPic = document.getElementById('leftPicture');
   var centerPic = document.getElementById('centerPicture');
@@ -57,11 +56,50 @@ console.log(userChoices);
 function displayThreePictures(leftPic, centerPic, rightPic){
 
 
-  leftPic.src = picArray[bigRandom()].filePath;
-  centerPic.src = picArray[bigRandom()].filePath;
-  rightPic.src = picArray[bigRandom()].filePath;
+  var leftPicSame = true;
+  var centerPicSame = true;
+  var rightPicSame  = true;
 
+  while(leftPicSame){
+    leftPic.src = picArray[bigRandom()].filePath;
+    for(var i=0; i<cantBe.length; i++){
+      if(cantBe[i]===leftPic.src){
+        leftPic.src = picArray[bigRandom()].filePath;
+      }
+    }
+    cantBe.push(leftPic.src);
+    // console.log(leftPic.src);
+    leftPicSame = false;
+  }
+  while(centerPicSame){
+    centerPic.src = picArray[bigRandom()].filePath;
+    for(var j=0; j<cantBe.length; j++){
+      if(cantBe[i]===centerPic.src){
+        centerPic.src = picArray[bigRandom()].filePath;
+      }
+    }
+    cantBe.push(centerPic.src);
+    // console.log(centerPic.src);
+    centerPicSame = false;
+  }
+  while(rightPicSame){
+    rightPic.src = picArray[bigRandom()].filePath;
+    for(var k=0; k<cantBe.length; k++){
+      if(cantBe[i]===rightPic.src){
+        rightPic.src = picArray[bigRandom()].filePath;
+      }
+    }
+    cantBe.push(rightPic.src);
+    // console.log('rightPic.src')
+    rightPicSame = false;
+  }
 
+  if(cantBe.length>3){
+    cantBe.shift();
+    cantBe.shift();
+    cantBe.shift();
+  }
+  console.log(cantBe);
 }
 
 function bigRandom() {
