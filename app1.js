@@ -6,6 +6,7 @@ var threePicturesID = document.getElementById('threePictures');
 var surveyForm = document.getElementById('survey-form');
 var userChoices = 0;
 var cantBe = [];
+var currentArray = [];
 var resultsViewed = false;
 var imagePaths = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.gif', 'img/water-can.jpg', 'img/wine-glass.jpg'];
 var imageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'chthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
@@ -38,58 +39,40 @@ displayThreePictures(leftPic, centerPic, rightPic);
 
 function displayThreePictures(leftPic, centerPic, rightPic){
 
-  // Left Picture Set
-  var leftPicIndex=bigRandom();
-  leftPic.src = picArray[leftPicIndex].filePath;
-  leftPic.alt = leftPicIndex;
-  for(var i=0; i<cantBe.length; i++){
-    if(cantBe[i]===leftPicIndex){
-      leftPicIndex=bigRandom();
-      leftPic.src = picArray[leftPicIndex].filePath;
-      leftPic.alt = leftPicIndex;
-      i=0;
-    }
-  }
-  cantBe.push(leftPicIndex);
-  picArray[leftPicIndex].howOftenAppear+=1;
+  currentArray[0] = bigRandom();
+  currentArray[1] = bigRandom();
+  currentArray[2] = bigRandom();
 
-  // Center Picture Set
-  var centerPicIndex=bigRandom();
-  centerPic.src = picArray[centerPicIndex].filePath;
-  centerPic.alt = centerPicIndex;
-  for(var j=0; j<cantBe.length; j++){
-    if(cantBe[j]===centerPicIndex){
-      centerPicIndex=bigRandom();
-      centerPic.src = picArray[centerPicIndex].filePath;
-      centerPic.alt = centerPicIndex;
-      j=0;
-    }
+  while(currentArray[0]===cantBe[0]||currentArray[0]===cantBe[1]||currentArray[0]===cantBe[2]){
+    currentArray[0]=bigRandom();
   }
-  cantBe.push(centerPicIndex);
-  picArray[centerPicIndex].howOftenAppear+=1;
 
-  // Right Picture Set
-  var rightPicIndex=bigRandom();
-  rightPic.src = picArray[rightPicIndex].filePath;
-  rightPic.alt = rightPicIndex;
-  for(var k=0; k<cantBe.length; k++){
-    if(cantBe[k]===rightPic.src){
-      rightPicIndex=bigRandom();
-      rightPic.src = picArray[rightPicIndex].filePath;
-      rightPic.alt = rightPicIndex;
-      k=0;
-    }
+  while(currentArray[0]===currentArray[1]||currentArray[1]===cantBe[0]||currentArray[1]===cantBe[1]||currentArray[1]===cantBe[2]) {
+    currentArray[1]=bigRandom();
   }
-  cantBe.push(rightPicIndex);
-  picArray[rightPicIndex].howOftenAppear+=1;
 
-  // console.log('The alts are '+leftPic.alt, centerPic.alt, rightPic.alt);
-
-  while(cantBe.length>3){
-    cantBe.shift();
+  while(currentArray[2]===currentArray[1]||currentArray[2]===currentArray[0]||currentArray[2]===cantBe[0]||currentArray[2]===cantBe[1]||currentArray[2]===cantBe[2]){
+    currentArray[2]=bigRandom();
   }
+
+  setCantBe();
+
+  leftPic.src = picArray[currentArray[0]].filePath;
+  centerPic.src = picArray[currentArray[1]].filePath;
+  rightPic.src = picArray[currentArray[2]].filePath;
+  picArray[currentArray[0]].howOftenAppear+=1;
+  picArray[currentArray[1]].howOftenAppear+=1;
+  picArray[currentArray[2]].howOftenAppear+=1;
+  leftPic.alt=currentArray[0];
+  centerPic.alt=currentArray[1];
+  rightPic.alt=currentArray[2];
 }
 
+function setCantBe(){
+  cantBe[0] = currentArray[0];
+  cantBe[1] = currentArray[1];
+  cantBe[2] = currentArray[2];
+}
 function bigRandom() {
   return Math.floor(Math.random()*20);
 }
