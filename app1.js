@@ -32,6 +32,9 @@ function NewPicture(imagePath, imageName){
 
 displayThreePictures(leftPic, centerPic, rightPic);
 
+// Event Listener
+threePicturesID.addEventListener('click', superEventHandler);
+
 // Event Handler >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function superEventHandler(event){
@@ -41,43 +44,50 @@ function superEventHandler(event){
   if (event.currentTarget === event.target){
     return alert('Click on the picture please');
   }
+  if(userChoices >=25)
+    return alert('Thank you for completing the survey! Please click on the view results button to review the results.')
 
-  console.log(event.target);
-  console.log(cantBe);
-  if (event.target === rightPic){
-    for(var z=0; z<picArray.length; z++){
-      console.log(picArray[z].filePath, cantBe[2]);
-      if (picArray[z].filePath===cantBe[2]){
-        picArray[z].howOftenClicked+=1;
-      }
-    }
-    console.log('rightPic clicked')
-  }
-  if (event.target === centerPic){
-    for(var x=0; x<picArray.length; x++){
-      if (picArray[x].filePath===cantBe[1]){
-        picArray[x].howOftenClicked+=1;
-      }
-    }
-    console.log('centerPic clicked')
-  }
-  if (event.target === leftPic){
-    for(var c=0; c<picArray.length; c++){
-      if (picArray[c].filePath===cantBe[0]){
-        picArray[c].howOftenClicked+=1;
-      }
-    }
-    console.log('leftPic clicked');
-  }
+  var clickedPic = event.target.id.value;
+
+  console.log('event target is ' +clickedPic);
+
+
+  // console.log(cantBe);
+  // if (event.target === rightPic){
+  //   for(var z=0; z<picArray.length; z++){
+  //     console.log(picArray[z].filePath, cantBe[2]);
+  //     if (picArray[z].filePath===cantBe[2]){
+  //       picArray[z].howOftenClicked+=1;
+  //     }
+  //   }
+  //   console.log('rightPic clicked')
+  // }
+  // if (event.target === centerPic){
+  //   for(var x=0; x<picArray.length; x++){
+  //     if (picArray[x].filePath===cantBe[1]){
+  //       picArray[x].howOftenClicked+=1;
+  //     }
+  //   }
+  //   console.log('centerPic clicked')
+  // }
+  // if (event.target === leftPic){
+  //   for(var c=0; c<picArray.length; c++){
+  //     if (picArray[c].filePath===cantBe[0]){
+  //       picArray[c].howOftenClicked+=1;
+  //     }
+  //   }
+  //   console.log('leftPic clicked');
+  // }
 
   displayThreePictures(leftPic, centerPic, rightPic);
+  userChoices+=1;
+  console.log(userChoices);
 
 }
-// Event Listener
-threePicturesID.addEventListener('click', superEventHandler);
 
-console.log(userChoices);
-// Functions
+
+
+// Functioning Functions
 
 function displayThreePictures(leftPic, centerPic, rightPic){
 
@@ -93,29 +103,28 @@ function displayThreePictures(leftPic, centerPic, rightPic){
       }
     }
     cantBe.push(leftPic.src);
-    // console.log(leftPic.src);
     leftPicSame = false;
   }
+
   while(centerPicSame){
     centerPic.src = picArray[bigRandom()].filePath;
     for(var j=0; j<cantBe.length; j++){
-      if(cantBe[i]===centerPic.src){
+      if(cantBe[j]===centerPic.src){
         centerPic.src = picArray[bigRandom()].filePath;
       }
     }
     cantBe.push(centerPic.src);
-    // console.log(centerPic.src);
     centerPicSame = false;
   }
+
   while(rightPicSame){
     rightPic.src = picArray[bigRandom()].filePath;
     for(var k=0; k<cantBe.length; k++){
-      if(cantBe[i]===rightPic.src){
+      if(cantBe[k]===rightPic.src){
         rightPic.src = picArray[bigRandom()].filePath;
       }
     }
     cantBe.push(rightPic.src);
-    // console.log('rightPic.src')
     rightPicSame = false;
   }
 
@@ -124,7 +133,6 @@ function displayThreePictures(leftPic, centerPic, rightPic){
     cantBe.shift();
     cantBe.shift();
   }
-  // console.log(cantBe);
 }
 
 function bigRandom() {
