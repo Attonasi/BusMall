@@ -1,0 +1,12 @@
+* {
+  color: black;
+}
+
+section {
+  border: 10px solid black
+}
+img {
+  width: 250px;
+  border: solid 5px red; 
+
+}
