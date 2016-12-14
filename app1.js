@@ -108,6 +108,14 @@ function superEventHandler(event){
     }
   }
 
+  if(localStorage.getItem('test')){
+
+
+  }else{
+
+    
+  }
+
   userChoices+=1;
 
   if(userChoices >=25){
