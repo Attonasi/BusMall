@@ -88,7 +88,7 @@ function fillDataArrays(){
     appearChartData.push(picArray[w].howOftenAppear);
     clickedChartData.push(picArray[w].howOftenClicked);
   }
-  console.log(appearChartData, clickedChartData);
+  // console.log(appearChartData, clickedChartData);
 }
 
 // Event Handlers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -110,7 +110,7 @@ function superEventHandler(event){
 
   userChoices+=1;
 
-  if(userChoices >=5){
+  if(userChoices >=25){
     return alert('Thank you for completing the survey! Please click on the view results button to review the results.');
   }
 
@@ -122,19 +122,20 @@ function buttonHandler(event){
   if (resultsViewed === true){
     return alert('gosh you are annoying');
   }
-  if(userChoices<5){
+  if(userChoices<25){
     return alert('Please complete the survey!')
   }
   fillDataArrays();
 
+  // Chart creation zone
+
   // var myBarChart = new Chart(barChart, {
-    // type: 'bar',
-    // labels: imageNames,
-    // data: clickedChartData
-    // options: options
-
-
+  // type: 'bar',
+  // labels: imageNames,
+  // data: clickedChartData
+  // options: options
   // });
+
   var myChart = new Chart(barChart, {
     type: 'bar',
     data: {
@@ -143,39 +144,14 @@ function buttonHandler(event){
         label: 'Product Appeared',
         data: appearChartData,
         backgroundColor: 'red',
-              // ['rgba(255, 99, 132, 0.2)',
-              // 'rgba(54, 162, 235, 0.2)',
-              // 'rgba(255, 206, 86, 0.2)',
-              // 'rgba(75, 192, 192, 0.2)',
-              // 'rgba(153, 102, 255, 0.2)',
-              // 'rgba(255, 159, 64, 0.2)']
-
         borderColor: 'black',
-              // ['rgba(255,99,132,1)',
-              // 'rgba(54, 162, 235, 1)',
-              // 'rgba(255, 206, 86, 1)',
-              // 'rgba(75, 192, 192, 1)',
-              // 'rgba(153, 102, 255, 1)',
-              // 'rgba(255, 159, 64, 1)']
         borderWidth: 1
       },
         {
           label: 'Product Chosen',
           data: clickedChartData,
           backgroundColor: 'blue',
-                // ['rgba(255, 99, 132, 0.2)',
-                // 'rgba(54, 162, 235, 0.2)',
-                // 'rgba(255, 206, 86, 0.2)',
-                // 'rgba(75, 192, 192, 0.2)',
-                // 'rgba(153, 102, 255, 0.2)',
-                // 'rgba(255, 159, 64, 0.2)'],
           borderColor: 'black',
-                // ['rgba(255,99,132,1)',
-                // 'rgba(54, 162, 235, 1)',
-                // 'rgba(255, 206, 86, 1)',
-                // 'rgba(75, 192, 192, 1)',
-                // 'rgba(153, 102, 255, 1)',
-                // 'rgba(255, 159, 64, 1)'],
           borderWidth: 1
         }]
     },
