@@ -17,16 +17,23 @@ var rightPic = document.getElementById('rightPicture');
 
 var barChart = document.getElementById('barChart').getContext('2d');
 
-var picArray = [];
 var appearChartData=[];
 var clickedChartData=[];
 
-// fill picArray
-for(var i=0; i<imagePaths.length; i++){
-  var imageName = imageNames[i];
-  var imagePath = imagePaths[i];
-  new NewPicture(imagePath, imageName);
+if(localStorage.getItem('picArray')){
+  var picArrayString = localStorage.getItem('picArray');
+  var picArray = JSON.parse(picArrayString);
+}else{
+  var picArray = [];
+  var picArrayString = 'bah';
+  // fill picArray
+  for(var i=0; i<imagePaths.length; i++){
+    var imageName = imageNames[i];
+    var imagePath = imagePaths[i];
+    new NewPicture(imagePath, imageName);
+  }
 }
+
 
 // constructor
 function NewPicture(imagePath, imageName){
@@ -91,6 +98,11 @@ function fillDataArrays(){
   // console.log(appearChartData, clickedChartData);
 }
 
+function updateLocalStorage(){
+  picArrayString = JSON.stringify(picArray);
+  localStorage.setItem('picArray', picArrayString);
+}
+
 // Event Handlers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function superEventHandler(event){
@@ -108,13 +120,7 @@ function superEventHandler(event){
     }
   }
 
-  if(localStorage.getItem('test')){
-
-
-  }else{
-
-    
-  }
+  updateLocalStorage();
 
   userChoices+=1;
 
@@ -134,15 +140,6 @@ function buttonHandler(event){
     return alert('Please complete the survey!')
   }
   fillDataArrays();
-
-  // Chart creation zone
-
-  // var myBarChart = new Chart(barChart, {
-  // type: 'bar',
-  // labels: imageNames,
-  // data: clickedChartData
-  // options: options
-  // });
 
   var myChart = new Chart(barChart, {
     type: 'bar',
